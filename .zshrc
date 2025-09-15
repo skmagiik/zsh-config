@@ -19,6 +19,8 @@ local -i deps_check_debug=1
 
 if (( $+commands[git] )); then
   (( deps_check_debug )) && git --version
+  # Ensure nvim is our git editor of choice
+  git config --global core.editor nvim
 else
   echo "git not found. Attempting to install with apt..."
   if (( $+commands[apt] )); then
@@ -203,7 +205,21 @@ fi
 
 
 alias binwalkv3="~/.cargo/bin/binwalkv3"
-alias readme="glow README.md"
+#alias readme="glow README.md"
+readme() {
+  emulate -L zsh
+  setopt localoptions extendedglob         # enable (#i) etc. just here
+
+  # expand into an array
+  local -a matches=(./(#i)readme.(md|markdown|rst|txt)(N))
+  if (( $#matches )); then
+    glow -- "$matches[1]"                  # first match
+  else
+    print -u2 "No README found."
+    return 1
+  fi
+}
+
 eval "$(starship init zsh)"
 
 
