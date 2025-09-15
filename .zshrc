@@ -1,4 +1,4 @@
-export PATH="$PATH:/home/chein/.local/bin:/home/chein/go/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/go/bin"
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
