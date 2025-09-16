@@ -15,7 +15,8 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 
-local -i deps_check_debug=1
+# Set to 1 to print version information and other debug during zsh init for the dependency checking.
+local -i deps_check_debug=0
 
 if (( $+commands[git] )); then
   (( deps_check_debug )) && git --version
@@ -222,4 +223,8 @@ readme() {
 
 eval "$(starship init zsh)"
 
+# If we're in tmux, Ctrl+e will be used to pull up the pane scrollback history in nvim for search / copy out
+if [[ "$TMUX" ]]; then
+  bindkey -s '^e' 'tmux capture-pane -p -S -30000 | nvim -\n'
+fi
 
