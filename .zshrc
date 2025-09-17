@@ -221,6 +221,32 @@ readme() {
   fi
 }
 
+todo() {
+  emulate -L zsh
+  setopt localoptions extendedglob         # enable (#i) etc. just here
+
+  # expand into an array
+  local -a matches=(./(#i)todo.md(N))
+  if [[ $# = 1 ]] ; then
+    if [[ $1 = "e" ]] || [[ $1 = "edit" ]]; then
+      if (( $#matches )); then
+        nvim "$matches[1]"
+      else
+        nvim todo.md
+      fi
+    else
+     print -u2 "Usage: todo [e/edit]"
+    fi
+  else
+    if (( $#matches )); then
+      glow -- "$matches[1]"                  # first match
+    else
+      print -u2 "No todo.md found."
+      return 1
+    fi
+  fi
+}
+
 eval "$(starship init zsh)"
 
 # If we're in tmux, Ctrl+e will be used to pull up the pane scrollback history in nvim for search / copy out
