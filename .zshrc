@@ -214,7 +214,7 @@ readme() {
   # expand into an array
   local -a matches=(./(#i)readme.(md|markdown|rst|txt)(N))
   if (( $#matches )); then
-    glow -- "$matches[1]"                  # first match
+    glow -w 0 -- "$matches[1]"                  # first match
   else
     print -u2 "No README found."
     return 1
@@ -239,7 +239,8 @@ todo() {
     fi
   else
     if (( $#matches )); then
-      glow -- "$matches[1]"                  # first match
+      clear
+      glow -w 0 -- "$matches[1]"                  # first match
     else
       print -u2 "No todo.md found."
       return 1
