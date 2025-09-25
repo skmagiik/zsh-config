@@ -205,8 +205,9 @@ else
 fi
 
 
+alias sv="source venv/bin/activate"
 alias binwalkv3="~/.cargo/bin/binwalkv3"
-#alias readme="glow README.md"
+
 readme() {
   emulate -L zsh
   setopt localoptions extendedglob         # enable (#i) etc. just here
@@ -250,8 +251,9 @@ todo() {
 
 eval "$(starship init zsh)"
 
-# If we're in tmux, Ctrl+e will be used to pull up the pane scrollback history in nvim for search / copy out
 if [[ "$TMUX" ]]; then
-  bindkey -s '^e' 'tmux capture-pane -p -S -30000 | nvim -\n'
+  bindkey -s '^h' 'tmux capture-pane -p -S -30000 | nvim -\n'
 fi
+
+
 
