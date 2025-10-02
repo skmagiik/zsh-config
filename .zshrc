@@ -216,7 +216,7 @@ else
     echo "git is required to install nvim. Please install snap first or manually install neovim "
   else
     echo "Installing/updating nvim via snap..."
-    sudo snap install nvim
+    sudo snap install nvim --classic
   fi
 fi
 
