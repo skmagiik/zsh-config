@@ -3,6 +3,24 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
+# Check for fzf-tab plugin
+FZF_TAB_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-tab"
+
+if [[ -d "$FZF_TAB_DIR" ]]; then
+    (( deps_check_debug )) && echo "fzf-tab plugin installed"
+else
+    echo "fzf-tab plugin not found. Attempting to install..."
+    if (( $+commands[git] )); then
+        if git clone https://github.com/Aloxaf/fzf-tab "$FZF_TAB_DIR"; then
+            echo "fzf-tab plugin installed"
+        else
+            echo "Failed to clone fzf-tab plugin. Please install manually."
+        fi
+    else
+        echo "git not available — cannot clone fzf-tab. Please install it manually."
+    fi
+fi
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
