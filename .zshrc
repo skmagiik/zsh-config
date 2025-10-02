@@ -109,6 +109,22 @@ else
   fi
 fi
 
+if dpkg-query -W -f='${Status}' libfontconfig-dev 2>/dev/null | grep -q "install ok installed"; then
+    (( deps_check_debug )) && echo "libfontconfig-dev installed"
+else
+    echo "libfontconfig-dev not found. Attempting to install with apt..."
+    if (( $+commands[apt] )); then
+        # Use non-interactive sudo if possible
+        if sudo -n true 2>/dev/null; then SUDO="sudo -n"; else SUDO="sudo"; fi
+        if $SUDO apt update && $SUDO apt install -y libfontconfig-dev; then
+            echo "libfontconfig-dev installed"
+        else
+            echo "Failed to install libfontconfig-dev with apt. Please install it manually."
+        fi
+    else
+        echo "apt not found on this system. Please install libfontconfig-dev via your package manager."
+    fi
+fi
 
 if (( $+commands[starship] )); then
   (( deps_check_debug )) && starship --version | head -n 1
